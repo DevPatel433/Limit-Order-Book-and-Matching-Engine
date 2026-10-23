@@ -1,0 +1,23 @@
+# CI smoke test: the scaling benchmark runs end to end, its correctness gate passes, and the CSV is well formed.
+# Says nothing about performance (tiny sizes, --allow-debug accepted).
+set(OUT ${WORKDIR}/scale_smoke.csv)
+file(REMOVE ${OUT})
+execute_process(COMMAND ${SCALE} --smoke --allow-debug --out ${OUT}
+                RESULT_VARIABLE rc OUTPUT_VARIABLE out ERROR_VARIABLE err)
+if(NOT rc EQUAL 0)
+  message(FATAL_ERROR "lob_scale failed (${rc})\n${out}\n${err}")
+endif()
+file(STRINGS ${OUT} rows)
+list(FILTER rows EXCLUDE REGEX "^#")
+list(LENGTH rows n)
+# header + 2 reps x (2 output modes x (1 sequential + 2 shard counts))
+math(EXPR expected "1 + 2 * 2 * 3")
+if(NOT n EQUAL expected)
+  message(FATAL_ERROR "scale csv has ${n} data lines, expected ${expected}")
+endif()
+list(GET rows 0 header)
+foreach(col mode output shards rep seconds commands_per_sec max_shard_share oversubscribed valid_for_comparison)
+  if(NOT header MATCHES "${col}")
+    message(FATAL_ERROR "scale csv header lacks ${col}")
+  endif()
+endforeach()
