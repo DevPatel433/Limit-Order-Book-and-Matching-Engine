@@ -1,0 +1,6 @@
+NEW 1 SELL 101 5
+NEW 2 SELL 102 10
+NEW 3 BUY 99 8
+NEW 4 BUY MKT 7                 # market order: sweeps both asks
+NEW 5 BUY 102 20 FOK            # fill-or-kill: only 8 available, so nothing trades
+AMEND 3 100 8             # price change: loses queue position

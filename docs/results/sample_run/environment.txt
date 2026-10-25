@@ -1,0 +1,34 @@
+timestamp_utc=2026-10-04T09:35:17Z
+cpu_model=Intel(R) Xeon(R) Processor @ 2.10GHz
+logical_cpus=1
+cpu_governor=unknown
+os=Linux 6.18.44-fc-v64 x86_64
+compiler=gcc 13.3.0
+build_type=Release
+cxx_flags=-O3 -DNDEBUG
+asserts_enabled=0
+sanitizers=0
+valid_for_comparison=1
+pinned_cpu=-1
+timer_overhead_ns=23
+measured_ops=200000
+warmup_ops=20000
+reps=5
+seed=1
+
+Methodology
+-----------
+* Operations are pre-generated (deterministic from the seed) so generation, parsing and I/O are never timed.
+* Each pass uses a fresh MatchingEngine. Prefill + warm-up operations run first, untimed; only the
+  measured segment is recorded. 'Event' in events/sec means one input command (submit or cancel).
+* Throughput pass: the whole measured segment is timed once with std::chrono::steady_clock; no per-op clock reads.
+* Latency pass: each operation is timed individually (two steady_clock reads). The cost of the clock
+  itself is reported as timer_overhead_ns; latencies below a few multiples of it are not meaningful.
+* Percentiles use nearest-rank on the sorted samples and are reported only when at least 10 samples lie
+  above them (p99 needs >= 1,000 samples; p99.9 needs >= 10,000). Otherwise the cell is left empty.
+* Allocation pass: global operator new/delete are counted during the measured segment; peak_live_bytes uses
+  malloc_usable_size (glibc) and covers the whole run including the prefill.
+* Repetitions re-run the identical operation list; the spread across reps shows run-to-run noise.
+* Builds with assertions enabled or sanitizers are flagged valid_for_comparison=0 and must not be
+  compared with optimised builds. Frequency scaling / turbo / noisy neighbours are NOT controlled
+  unless you pin the CPU and fix the governor yourself.

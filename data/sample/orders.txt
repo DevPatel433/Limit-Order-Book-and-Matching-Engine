@@ -1,0 +1,16 @@
+# Order types: market, IOC, FOK, and amend (priority kept vs lost).
+NEW 1 SELL 100 5
+NEW 2 SELL 100 5       # same price, behind order 1
+NEW 3 SELL 101 5
+NEW 4 BUY 90 6
+NEW 5 BUY 90 4         # behind order 4
+SNAPSHOT
+NEW 6 BUY 100 12 FOK   # 15 available at <=100? only 10 -> killed, nothing trades
+NEW 7 BUY 101 12 FOK   # 15 available at <=101 -> fills 5+5+2
+NEW 8 BUY MKT 10       # market: takes the rest of order 3 (3) then expires the remaining 7
+NEW 9 BUY 95 4 IOC     # nothing to buy at <=95: accepted, then expired
+AMEND 4 90 3           # quantity down, same price: keeps priority
+AMEND 5 90 9           # quantity up: loses priority
+NEW 10 SELL 90 5       # hits the bid queue in priority order: 4 (3) then 5 (2)
+AMEND 5 95 7           # price change: new level, back of queue
+SNAPSHOT

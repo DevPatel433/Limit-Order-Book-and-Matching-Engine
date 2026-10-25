@@ -1,0 +1,58 @@
+workload         instr/op    allocator   hash index  ordered map   FIFO queue  engine logi   book logic  benchmark l
+non_crossing          846        50.8%        14.0%         0.0%         1.1%        11.3%        21.9%         0.0%         0.9%
+cancel_heavy          523        32.0%        12.3%         0.0%         1.4%        16.0%        36.8%         0.0%         1.3%
+crossing_heavy        668        35.2%        12.7%         4.9%         1.2%        18.9%        25.8%         0.0%         1.4%
+many_levels           582        29.9%        11.1%         1.2%         1.3%        14.4%        40.8%         0.0%         1.3%
+bursty                659        36.9%        14.2%         0.0%         1.5%        16.5%        29.5%         0.0%         1.4%
+
+columns: allocator (malloc/free/new/delete/memset) | hash index (unordered_map) | ordered map (std::map price levels) | FIFO queue (std::list) | engine logic (MatchingEngine) | book logic (OrderBook, incl. inlined map/list code) | benchmark loop | other
+
+== non_crossing: top self-cost functions ==
+   31.2%  _int_malloc
+   10.6%  malloc
+    6.6%  std::pair<std::__detail::_Node_iterator<std::pair<unsigned long const…
+    6.3%  lob::MatchingEngine::submit(lob::Order const&, std::vector<std::varia…
+    4.7%  operator new(unsigned long)
+    3.7%  lob::AddStatus lob::OrderBook::add_to<std::map<long, lob::PriceLevel,…
+    3.7%  lob::AddStatus lob::OrderBook::add_to<std::map<long, lob::PriceLevel,…
+    2.8%  __memset_avx2_unaligned_erms
+
+== cancel_heavy: top self-cost functions ==
+   11.2%  _int_free
+    8.6%  malloc
+    6.2%  lob::OrderBook::cancel(unsigned long)
+    5.5%  std::pair<std::__detail::_Node_iterator<std::pair<unsigned long const…
+    5.3%  free
+    5.1%  lob::MatchingEngine::submit(lob::Order const&, std::vector<std::varia…
+    3.8%  operator new(unsigned long)
+    3.4%  lob::MatchingEngine::cancel(unsigned long, std::vector<std::variant<l…
+
+== crossing_heavy: top self-cost functions ==
+   10.5%  lob::MatchingEngine::submit(lob::Order const&, std::vector<std::varia…
+    9.4%  malloc
+    9.2%  _int_free
+    5.7%  _int_malloc
+    5.0%  std::pair<std::__detail::_Node_iterator<std::pair<unsigned long const…
+    4.7%  free
+    4.2%  operator new(unsigned long)
+    2.5%  (anonymous namespace)::lob_measured_segment(lob::MatchingEngine&, lob…
+
+== many_levels: top self-cost functions ==
+   10.5%  _int_free
+    9.9%  lob::OrderBook::cancel(unsigned long)
+    8.1%  malloc
+    5.7%  lob::AddStatus lob::OrderBook::add_to<std::map<long, lob::PriceLevel,…
+    5.6%  lob::AddStatus lob::OrderBook::add_to<std::map<long, lob::PriceLevel,…
+    5.0%  free
+    4.8%  std::pair<std::__detail::_Node_iterator<std::pair<unsigned long const…
+    4.6%  lob::MatchingEngine::submit(lob::Order const&, std::vector<std::varia…
+
+== bursty: top self-cost functions ==
+   13.5%  _int_free
+    8.6%  malloc
+    7.6%  lob::MatchingEngine::submit(lob::Order const&, std::vector<std::varia…
+    5.6%  free
+    5.5%  std::pair<std::__detail::_Node_iterator<std::pair<unsigned long const…
+    3.8%  operator new(unsigned long)
+    3.6%  _int_malloc
+    3.0%  std::_Hashtable<unsigned long, std::pair<unsigned long const, lob::Or…

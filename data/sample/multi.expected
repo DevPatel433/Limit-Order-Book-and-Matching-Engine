@@ -1,0 +1,34 @@
+@AAPL ACCEPTED id=1 Sell 101 x 5
+@MSFT ACCEPTED id=1 Sell 50 x 10
+@AAPL ACCEPTED id=2 Buy 101 x 3
+@AAPL TRADE maker=1 taker=2 Buy 101 x 3
+@MSFT ACCEPTED id=2 Buy 49 x 4
+@AAPL ACCEPTED id=3 Buy 100 x 7
+@MSFT REJECTED id=3 UnknownOrder
+@AAPL AMENDED id=3 100 x 7 -> 100 x 4 priority=kept
+@GOOG ACCEPTED id=1 Buy 200 x 5
+@GOOG ACCEPTED id=2 Sell 190 x 8 IOC
+@GOOG TRADE maker=1 taker=2 Sell 200 x 5
+@GOOG EXPIRED id=2 remaining=3
+@AAPL BOOK depth=2
+  ASK 101 x 2 (1)
+  ----
+  BID 100 x 4 (1)
+END
+@MSFT CANCELLED id=1 remaining=10
+@AAPL BOOK depth=5
+  ASK 101 x 2 (1)
+  ----
+  BID 100 x 4 (1)
+END
+@MSFT BOOK depth=5
+  ----
+  BID 49 x 4 (1)
+END
+@GOOG BOOK depth=5
+  ----
+END
+SUMMARY @AAPL commands=5 accepted=3 rejected=0 trades=1 cancelled=0 traded_qty=3 resting=2 amended=1
+SUMMARY @MSFT commands=4 accepted=2 rejected=1 trades=0 cancelled=1 traded_qty=0 resting=1
+SUMMARY @GOOG commands=2 accepted=2 rejected=0 trades=1 cancelled=0 traded_qty=5 resting=0 expired=1
+SUMMARY symbols=3 commands=11 accepted=7 rejected=1 trades=2 cancelled=1 traded_qty=8 resting=3 expired=1 amended=1

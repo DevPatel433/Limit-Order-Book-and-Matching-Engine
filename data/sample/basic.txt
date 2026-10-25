@@ -1,0 +1,10 @@
+# Small walk-through of the core behaviours.
+NEW 1 SELL 101 5      # rests
+NEW 2 SELL 100 4      # rests, better ask
+NEW 3 BUY 99 10       # rests
+SNAPSHOT 3
+NEW 4 BUY 101 6       # sweeps 100 then part of 101; executes at maker prices
+CANCEL 3
+CANCEL 3              # already gone -> rejected
+NEW 2 BUY 50 0        # zero quantity -> rejected
+SNAPSHOT

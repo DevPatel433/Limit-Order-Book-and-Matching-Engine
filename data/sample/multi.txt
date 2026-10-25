@@ -1,0 +1,13 @@
+# Three instruments in one stream. Order IDs are per symbol: AAPL's order 1 and MSFT's order 1 are
+# unrelated orders, and every cancel/amend names the symbol it applies to.
+@AAPL NEW 1 SELL 101 5
+@MSFT NEW 1 SELL 50 10           # same id as above, different book: accepted
+@AAPL NEW 2 BUY 101 3            # trades 3 against AAPL order 1
+@MSFT NEW 2 BUY 49 4             # rests: MSFT's best ask is 50, and AAPL's trade did not touch it
+@AAPL NEW 3 BUY 100 7
+@MSFT CANCEL 3                   # id 3 exists only in AAPL: unknown here
+@AAPL AMEND 3 100 4              # quantity-only reduction keeps queue priority
+@GOOG NEW 1 BUY 200 5
+@GOOG NEW 2 SELL 190 8 IOC       # trades 5 at the resting price, the rest expires
+@AAPL SNAPSHOT 2
+@MSFT CANCEL 1

@@ -1,0 +1,15 @@
+ACCEPTED id=1 Sell 101 x 5
+ACCEPTED id=2 Sell 102 x 10
+ACCEPTED id=3 Buy 99 x 8
+ACCEPTED id=4 Buy MKT x 7 IOC
+TRADE maker=1 taker=4 Buy 101 x 5
+TRADE maker=2 taker=4 Buy 102 x 2
+ACCEPTED id=5 Buy 102 x 20 FOK
+EXPIRED id=5 remaining=20
+AMENDED id=3 99 x 8 -> 100 x 8 priority=lost
+BOOK depth=5
+  ASK 102 x 8 (1)
+  ----
+  BID 100 x 8 (1)
+END
+SUMMARY commands=6 accepted=5 rejected=0 trades=2 cancelled=0 traded_qty=7 resting=2 expired=1 amended=1

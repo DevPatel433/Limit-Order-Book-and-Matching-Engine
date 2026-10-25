@@ -1,0 +1,37 @@
+ACCEPTED id=1 Sell 100 x 5
+ACCEPTED id=2 Sell 100 x 5
+ACCEPTED id=3 Sell 101 x 5
+ACCEPTED id=4 Buy 90 x 6
+ACCEPTED id=5 Buy 90 x 4
+BOOK depth=5
+  ASK 101 x 5 (1)
+  ASK 100 x 10 (2)
+  ----
+  BID 90 x 10 (2)
+END
+ACCEPTED id=6 Buy 100 x 12 FOK
+EXPIRED id=6 remaining=12
+ACCEPTED id=7 Buy 101 x 12 FOK
+TRADE maker=1 taker=7 Buy 100 x 5
+TRADE maker=2 taker=7 Buy 100 x 5
+TRADE maker=3 taker=7 Buy 101 x 2
+ACCEPTED id=8 Buy MKT x 10 IOC
+TRADE maker=3 taker=8 Buy 101 x 3
+EXPIRED id=8 remaining=7
+ACCEPTED id=9 Buy 95 x 4 IOC
+EXPIRED id=9 remaining=4
+AMENDED id=4 90 x 6 -> 90 x 3 priority=kept
+AMENDED id=5 90 x 4 -> 90 x 9 priority=lost
+ACCEPTED id=10 Sell 90 x 5
+TRADE maker=4 taker=10 Sell 90 x 3
+TRADE maker=5 taker=10 Sell 90 x 2
+AMENDED id=5 90 x 7 -> 95 x 7 priority=lost
+BOOK depth=5
+  ----
+  BID 95 x 7 (1)
+END
+BOOK depth=5
+  ----
+  BID 95 x 7 (1)
+END
+SUMMARY commands=15 accepted=10 rejected=0 trades=6 cancelled=0 traded_qty=20 resting=1 expired=3 amended=3

@@ -1,0 +1,11 @@
+# Price priority, FIFO within a price, partial fills, and a resting remainder.
+NEW 10 SELL 102 5
+NEW 11 SELL 100 5
+NEW 12 SELL 100 5     # same price as 11, arrives later
+NEW 13 SELL 101 5
+NEW 14 BUY 98 7
+SNAPSHOT
+NEW 15 BUY 101 13     # 11 (5) then 12 (5) at 100, then 13 (3 of 5) at 101
+SNAPSHOT
+NEW 16 SELL 97 20     # takes bid 14 (7 at 98), remaining 13 rests as the new best ask
+SNAPSHOT
