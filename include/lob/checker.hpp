@@ -29,7 +29,6 @@ namespace lob {
 // checker's state is undefined; stop using it.
 class ConsistencyChecker {
 public:
-    // Returns a description of the first violation, or nullopt if all is well.
     // Works with any engine implementation (baseline or pooled).
     template <class Policy>
     std::optional<std::string> observe(const std::vector<Event>& events,
