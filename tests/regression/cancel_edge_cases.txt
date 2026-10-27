@@ -1,0 +1,8 @@
+# Cancel of unknown, filled, taker-that-never-rested, partially filled, and twice.
+CANCEL 42
+NEW 1 SELL 100 10
+NEW 2 BUY 100 3      # partial fill of 1; 2 never rests
+CANCEL 2
+CANCEL 1             # reports remaining=7
+CANCEL 1
+SNAPSHOT

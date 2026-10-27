@@ -1,0 +1,5 @@
+# A duplicate live ID must be rejected BEFORE it can trade.
+NEW 1 SELL 100 5
+NEW 1 BUY 100 5      # same ID as a live order, would cross: rejected, no trade
+NEW 2 BUY 100 5
+SNAPSHOT

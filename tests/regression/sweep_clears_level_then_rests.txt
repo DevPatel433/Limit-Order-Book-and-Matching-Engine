@@ -1,0 +1,8 @@
+# Sweeping through several whole levels, then resting the remainder at the limit.
+NEW 1 SELL 100 5
+NEW 2 SELL 101 5
+NEW 3 SELL 102 5
+NEW 4 BUY 102 20     # clears all three levels, rests 5 at 102 (a level that just emptied)
+SNAPSHOT
+NEW 5 SELL 102 5     # trades with the resting remainder
+SNAPSHOT

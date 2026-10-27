@@ -1,0 +1,20 @@
+ACCEPTED id=1 Sell 100 x 5
+ACCEPTED id=2 Sell 101 x 5
+ACCEPTED id=3 Sell 102 x 5
+ACCEPTED id=4 Buy 102 x 20
+TRADE maker=1 taker=4 Buy 100 x 5
+TRADE maker=2 taker=4 Buy 101 x 5
+TRADE maker=3 taker=4 Buy 102 x 5
+BOOK depth=5
+  ----
+  BID 102 x 5 (1)
+END
+ACCEPTED id=5 Sell 102 x 5
+TRADE maker=4 taker=5 Sell 102 x 5
+BOOK depth=5
+  ----
+END
+BOOK depth=5
+  ----
+END
+SUMMARY commands=7 accepted=5 rejected=0 trades=4 cancelled=0 traded_qty=20 resting=0

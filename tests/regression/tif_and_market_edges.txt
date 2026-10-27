@@ -1,0 +1,15 @@
+# IOC / FOK / market boundary cases that are easy to get wrong.
+NEW 1 SELL 100 10
+NEW 2 BUY 100 10 FOK        # exactly the available quantity: fills
+NEW 3 SELL 100 10
+NEW 4 BUY 100 11 FOK        # one more than available: killed, nothing trades
+NEW 5 BUY 99 10 FOK         # limit below the ask: killed
+NEW 6 BUY MKT 25 FOK        # market FOK larger than the book: killed
+NEW 7 SELL MKT 5 GTC        # market + GTC can never rest: rejected
+NEW 8 SELL MKT 0            # zero quantity: rejected
+NEW 3 BUY 100 1 IOC         # duplicate of a live id: rejected, no trade
+NEW 9 BUY 100 4 IOC         # fills completely: no EXPIRED event
+NEW 10 SELL MKT 3           # empty bid side: accepted then expired
+NEW 11 BUY 100 9 IOC        # PARTIAL: takes the last 6 of order 3, the other 3 expire and never rest
+NEW 3 BUY 90 1              # id 3 is no longer live: reusable
+SNAPSHOT

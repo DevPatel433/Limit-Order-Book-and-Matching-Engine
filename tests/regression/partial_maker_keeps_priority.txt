@@ -1,0 +1,6 @@
+# A partially filled resting order must keep its place at the front of the queue.
+NEW 1 SELL 100 10
+NEW 2 SELL 100 10
+NEW 3 BUY 100 4      # takes 4 of order 1
+NEW 4 BUY 100 8      # must take the remaining 6 of order 1 first, then 2 of order 2
+SNAPSHOT

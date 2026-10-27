@@ -1,0 +1,18 @@
+# Amend semantics: priority kept vs lost, open-quantity rule, crossing, atomic rejection.
+AMEND 1 100 5               # unknown id
+NEW 1 BUY 100 10
+NEW 2 BUY 100 10
+NEW 3 SELL 100 4            # fills 4 of order 1 -> order 1 has 6 open
+AMEND 1 100 6               # same as OPEN quantity, same price: kept (not the original 10)
+AMEND 1 100 7               # above open quantity: priority lost, goes behind order 2
+NEW 4 SELL 100 12           # hits 2 (10) first, then 1 (2)
+AMEND 1 100 0               # zero quantity: rejected, order untouched
+AMEND 1 0 5                 # bad price: rejected, order untouched
+NEW 5 SELL 105 8
+AMEND 1 105 5               # amend a bid into the ask: crosses and trades as the taker
+AMEND 5 106 8               # order 5 has 3 open after that trade: reprice it and grow it to 8
+NEW 6 BUY 100 18446744073709551615
+NEW 7 BUY 99 1
+AMEND 7 100 5               # would overflow the level: rejected, order 7 keeps its place at 99
+CANCEL 7                    # proves order 7 still exists
+SNAPSHOT

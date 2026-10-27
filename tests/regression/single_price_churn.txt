@@ -1,0 +1,8 @@
+# Everything at one price: pure FIFO behaviour with interleaved cancels.
+NEW 1 BUY 100 2
+NEW 2 BUY 100 2
+NEW 3 BUY 100 2
+CANCEL 2
+NEW 4 SELL 100 3     # 1 fully (2), then 1 of order 3
+NEW 5 SELL 100 3     # remaining 1 of order 3, rest 2 as an ask
+SNAPSHOT

@@ -1,0 +1,7 @@
+# IDs are unique among LIVE orders only.
+NEW 1 SELL 100 5
+NEW 2 BUY 100 5      # fills 1; both gone
+NEW 1 BUY 90 3       # reuse of 1 after a full fill
+CANCEL 1
+NEW 1 SELL 110 2     # reuse after cancel, on the other side
+SNAPSHOT

@@ -1,0 +1,18 @@
+ACCEPTED id=1 Buy 100 x 2
+ACCEPTED id=2 Buy 100 x 2
+ACCEPTED id=3 Buy 100 x 2
+CANCELLED id=2 remaining=2
+ACCEPTED id=4 Sell 100 x 3
+TRADE maker=1 taker=4 Sell 100 x 2
+TRADE maker=3 taker=4 Sell 100 x 1
+ACCEPTED id=5 Sell 100 x 3
+TRADE maker=3 taker=5 Sell 100 x 1
+BOOK depth=5
+  ASK 100 x 2 (1)
+  ----
+END
+BOOK depth=5
+  ASK 100 x 2 (1)
+  ----
+END
+SUMMARY commands=7 accepted=5 rejected=0 trades=3 cancelled=1 traded_qty=4 resting=1

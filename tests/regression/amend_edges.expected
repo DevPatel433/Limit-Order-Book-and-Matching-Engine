@@ -1,0 +1,31 @@
+REJECTED id=1 UnknownOrder
+ACCEPTED id=1 Buy 100 x 10
+ACCEPTED id=2 Buy 100 x 10
+ACCEPTED id=3 Sell 100 x 4
+TRADE maker=1 taker=3 Sell 100 x 4
+AMENDED id=1 100 x 6 -> 100 x 6 priority=kept
+AMENDED id=1 100 x 6 -> 100 x 7 priority=lost
+ACCEPTED id=4 Sell 100 x 12
+TRADE maker=2 taker=4 Sell 100 x 10
+TRADE maker=1 taker=4 Sell 100 x 2
+REJECTED id=1 InvalidQuantity
+REJECTED id=1 InvalidPrice
+ACCEPTED id=5 Sell 105 x 8
+AMENDED id=1 100 x 5 -> 105 x 5 priority=lost
+TRADE maker=5 taker=1 Buy 105 x 5
+AMENDED id=5 105 x 3 -> 106 x 8 priority=lost
+ACCEPTED id=6 Buy 100 x 18446744073709551615
+ACCEPTED id=7 Buy 99 x 1
+REJECTED id=7 QuantityOverflow
+CANCELLED id=7 remaining=1
+BOOK depth=5
+  ASK 106 x 8 (1)
+  ----
+  BID 100 x 18446744073709551615 (1)
+END
+BOOK depth=5
+  ASK 106 x 8 (1)
+  ----
+  BID 100 x 18446744073709551615 (1)
+END
+SUMMARY commands=17 accepted=7 rejected=4 trades=4 cancelled=1 traded_qty=21 resting=2 amended=4

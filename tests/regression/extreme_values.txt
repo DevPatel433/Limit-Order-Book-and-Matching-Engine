@@ -1,0 +1,7 @@
+# Largest legal price and quantity; overflow guards; out-of-range prices.
+NEW 1 SELL 4611686018427387903 18446744073709551615
+NEW 2 SELL 4611686018427387903 1          # level total would overflow uint64
+NEW 3 BUY 4611686018427387904 5           # price above the maximum
+NEW 4 BUY 1 18446744073709551615
+NEW 5 BUY 4611686018427387903 18446744073709551615   # trades the full huge quantity
+SNAPSHOT

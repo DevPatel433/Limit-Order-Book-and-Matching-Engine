@@ -1,0 +1,14 @@
+REJECTED id=42 UnknownOrder
+ACCEPTED id=1 Sell 100 x 10
+ACCEPTED id=2 Buy 100 x 3
+TRADE maker=1 taker=2 Buy 100 x 3
+REJECTED id=2 UnknownOrder
+CANCELLED id=1 remaining=7
+REJECTED id=1 UnknownOrder
+BOOK depth=5
+  ----
+END
+BOOK depth=5
+  ----
+END
+SUMMARY commands=7 accepted=2 rejected=3 trades=1 cancelled=1 traded_qty=3 resting=0
