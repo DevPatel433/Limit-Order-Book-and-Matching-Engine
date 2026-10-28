@@ -1,0 +1,53 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": { "major": 3, "minor": 21, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "release",
+      "displayName": "Release (benchmarks are only valid in this configuration)",
+      "binaryDir": "${sourceDir}/build/release",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+    },
+    {
+      "name": "debug",
+      "displayName": "Debug (assertions and O(n) invariant checks on)",
+      "binaryDir": "${sourceDir}/build/debug",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug", "LOB_WERROR": "ON" }
+    },
+    {
+      "name": "asan",
+      "displayName": "Debug + AddressSanitizer + UBSan, warnings as errors",
+      "binaryDir": "${sourceDir}/build/asan",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug", "LOB_ENABLE_SANITIZERS": "ON", "LOB_WERROR": "ON" }
+    },
+    {
+      "name": "tsan",
+      "displayName": "RelWithDebInfo + ThreadSanitizer, warnings as errors (data-race check for the Phase 7 pipeline)",
+      "binaryDir": "${sourceDir}/build/tsan",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo", "LOB_ENABLE_TSAN": "ON", "LOB_WERROR": "ON" }
+    },
+    {
+      "name": "profile",
+      "displayName": "Optimised with symbols and frame pointers (for perf / callgrind)",
+      "binaryDir": "${sourceDir}/build/profile",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "-O3 -g -DNDEBUG -fno-omit-frame-pointer",
+        "LOB_BUILD_TESTS": "OFF"
+      }
+    }
+  ],
+  "buildPresets": [
+    { "name": "release", "configurePreset": "release" },
+    { "name": "debug", "configurePreset": "debug" },
+    { "name": "asan", "configurePreset": "asan" },
+    { "name": "tsan", "configurePreset": "tsan" },
+    { "name": "profile", "configurePreset": "profile" }
+  ],
+  "testPresets": [
+    { "name": "release", "configurePreset": "release", "output": { "outputOnFailure": true } },
+    { "name": "debug", "configurePreset": "debug", "output": { "outputOnFailure": true } },
+    { "name": "asan", "configurePreset": "asan", "output": { "outputOnFailure": true } },
+    { "name": "tsan", "configurePreset": "tsan", "output": { "outputOnFailure": true } }
+  ]
+}
